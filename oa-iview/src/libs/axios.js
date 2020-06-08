@@ -4,11 +4,14 @@ import router from '../router'
 import store from '../store/'
 
 class HttpRequest {
-  constructor(baseUrl = '') {
-    this.baseUrl = baseUrl
+  // 注意: process.env 是一个全局变量，可以判断当前的环境。
+  constructor (baseUrl = '') {
+    // this.baseUrl = baseUrl
+    this.baseUrl = process.env.API_ROOT
+
     this.queue = []
   }
-  getInsideConfig(options) {
+  getInsideConfig (options) {
     const config = {
       baseURL: this.baseUrl,
       timeout: options.timeout || 5000
@@ -20,13 +23,13 @@ class HttpRequest {
     }
     return Object.assign(config, options)
   }
-  destroy(url) {
+  destroy (url) {
     this.queue.splice(this.queue.findIndex(item => item === url), 1)
     if (!this.queue.length) {
       iView.Spin.hide()
     }
   }
-  interceptors(instance, {
+  interceptors (instance, {
     url,
     loading = false
   }) {
@@ -76,7 +79,7 @@ class HttpRequest {
       return Promise.reject(message || '未知错误，请联系管理员')
     })
   }
-  request(options) {
+  request (options) {
     const instance = axios.create()
     options = this.getInsideConfig(options)
     this.interceptors(instance, options)
