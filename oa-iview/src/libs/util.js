@@ -1,7 +1,7 @@
 import Cookies from 'js-cookie'
 // cookie保存的天数
 import config from '@/config'
-// import defaultImage from '_a/images/pro-200.png';
+import defaultImage from '_a/images/pro-200.png'
 
 const {
   title,
@@ -9,9 +9,8 @@ const {
   useI18n
 } = config
 
-export const HAS_LOGIN = 'has_login';
-// const imgBasePath = config.imgBasePath;
-const imgBasePath = '';
+export const HAS_LOGIN = 'has_login'
+const imgBasePath = config.imgBasePath
 // ---------------------------------
 
 export const forEach = (arr, fn) => {
@@ -25,10 +24,10 @@ export const forEach = (arr, fn) => {
 }
 
 export const getImageSrc = (src) => {
-  if(src){
-    return src.includes("://")?src:imgBasePath+src;
-  }else{
-    return defaultImage;
+  if (src) {
+    return src.includes('://') ? src : imgBasePath + src
+  } else {
+    return defaultImage
   }
 }
 
@@ -70,7 +69,7 @@ export const hasOneOf = (targetarr, arr) => {
  * @param {String|Number} value 要验证的字符串或数值
  * @param {*} validList 用来验证的列表
  */
-export function oneOf(value, validList) {
+export function oneOf (value, validList) {
   for (let i = 0; i < validList.length; i++) {
     if (value === validList[i]) {
       return true
@@ -439,7 +438,7 @@ export const hasChild = (item) => {
  * @returns {Array}
  */
 export const getBreadCrumbList = (route, homeRoute) => {
-  let homeItem = { ...homeRoute, icon: homeRoute.meta&&homeRoute.meta.icon }
+  let homeItem = { ...homeRoute, icon: homeRoute.meta && homeRoute.meta.icon }
   let routeMetched = route.matched
   if (routeMetched.some(item => item.name === homeRoute.name)) return [homeItem]
   let res = routeMetched.filter(item => {
@@ -456,14 +455,14 @@ export const getBreadCrumbList = (route, homeRoute) => {
       meta: meta,
       path: item.path
     }
-    if(obj.meta && !obj.meta.title){
-      delete obj.meta;
+    if (obj.meta && !obj.meta.title) {
+      delete obj.meta
     }
     return obj
   })
-  res = res.filter((item, index, self )=> {
-    if(index !== (res.length-1)){
-      item['to'] = item.path;
+  res = res.filter((item, index, self) => {
+    if (index !== (res.length - 1)) {
+      item['to'] = item.path
     }
     return item.meta && !item.meta.hideInMenu
   })
@@ -553,9 +552,9 @@ export const setProMapListInLocalstorage = (map) => {
  */
 export const getProListInLocalstorage = (key) => {
   const map = localStorage.proMapList
-  if(key){
+  if (key) {
     return map ? JSON.parse(map)[key] : []
-  }else{
+  } else {
     return map ? JSON.parse(map) : {}
   }
 }
@@ -620,11 +619,13 @@ export const getNewTagList = (list, newRoute) => {
   } = newRoute
   let newList = [...list]
   if (newList.findIndex(item => item.name === name) >= 0) return newList
-  else newList.push({
+  else {
+ newList.push({
     name,
     path,
     meta
   })
+}
   return newList
 }
 
